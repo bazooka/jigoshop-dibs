@@ -3,28 +3,27 @@
   Plugin Name: Dibs Payment Gateway
   Plugin URI: http://bazooka.se/
   Description: Allows you to use Dibs payment gateway with the Jigoshop ecommerce plugin.
-  Version: 0.9
+  Version: 00.09
   Author: Esbjörn Eriksson
   Author URI: http://bazooka.se/
  */
 
 
-/*
+/*  Copyright 2012  Bazooka AB  (email : info@bazooka.se)
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License, version 2, as
-  published by the Free Software Foundation.
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 2, as 
+    published by the Free Software Foundation.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
- */
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 
 /* Add a custom payment class after Jigoshop has loaded */
 add_action('plugins_loaded', 'jigoshop_dibs', 0);
@@ -118,7 +117,7 @@ function jigoshop_dibs()
 			);
 
 			$defaults[] = array(
-				'name'		=> __('DIBS Merchant id','jigoshop'),
+				'name'		=> __('DIBS Merchant ID','jigoshop'),
 				'desc' 		=> '',
 				'tip' 		=> __('Please enter your DIBS merchant id; this is needed in order to take payment!','jigoshop'),
 				'id' 		=> 'jigoshop_dibs_merchant',
@@ -151,7 +150,7 @@ function jigoshop_dibs()
 			$defaults[] = array(
 				'name'		=> __('Language','jigoshop'),
 				'desc' 		=> '',
-				'tip' 		=> __('Show Dibs FlexWin in this language. If set to WPML detect, it switches between the languages listed here, but if not found defaults to English.','jigoshop'),
+				'tip' 		=> __('Show Dibs Payment Window in this language. If set to WPML detect, it switches between the languages listed here, but if not found defaults to English.','jigoshop'),
 				'id' 		=> 'jigoshop_dibs_language',
 				'std' 		=> 'en',
 				'type' 		=> 'select',
