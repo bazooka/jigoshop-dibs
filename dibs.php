@@ -1,6 +1,6 @@
 <?php
 /*
-  Plugin Name: Dibs Payment Gateway
+  Plugin Name: Jigoshop - Dibs Payment Gateway
   Plugin URI: http://bazooka.se/
   Description: Allows you to use Dibs payment gateway with the Jigoshop ecommerce plugin.
   Version: 00.09
@@ -26,8 +26,8 @@
 */
 
 /* Add a custom payment class after Jigoshop has loaded */
-add_action('plugins_loaded', 'jigoshop_dibs', 0);
-function jigoshop_dibs()
+add_action('plugins_loaded', 'jigoshop_dibspayment', 0);
+function jigoshop_dibspayment()
 {
 	if (!class_exists('jigoshop_payment_gateway'))
 		return; // if the Jigoshop payment gateway class is not available, do nothing
@@ -35,34 +35,34 @@ function jigoshop_dibs()
 	/**
 	 * Add the gateway to JigoShop
 	 **/
-	function add_dibs_gateway( $methods ) {
-		$methods[] = 'dibs';
+	function add_dibspayment_gateway( $methods ) {
+		$methods[] = 'dibspayment';
 		return $methods;
 	}
-	add_filter( 'jigoshop_payment_gateways', 'add_dibs_gateway', 50 );
+	add_filter( 'jigoshop_payment_gateways', 'add_dibspayment_gateway', 50 );
 
 
-	class dibs extends jigoshop_payment_gateway {
+	class dibspayment extends jigoshop_payment_gateway {
 
 		public function __construct() {
 			
 			parent::__construct();
 			
-			$this->id = 'dibs';
+			$this->id = 'dibspayment';
 			$this->icon = '';
 			$this->has_fields = false;
-			$this->enabled = Jigoshop_Base::get_options()->get_option('jigoshop_dibs_enabled');
-			$this->title = Jigoshop_Base::get_options()->get_option('jigoshop_dibs_title');
-			$this->merchant = Jigoshop_Base::get_options()->get_option('jigoshop_dibs_merchant');
-			$this->description  = Jigoshop_Base::get_options()->get_option('jigoshop_dibs_description');
-			$this->testmode = Jigoshop_Base::get_options()->get_option('jigoshop_dibs_testmode');
-			$this->MAC_key = Jigoshop_Base::get_options()->get_option('jigoshop_dibs_key');
-			$this->instant = Jigoshop_Base::get_options()->get_option('jigoshop_dibs_instant');
-			$this->language = Jigoshop_Base::get_options()->get_option('jigoshop_dibs_language');
+			$this->enabled = Jigoshop_Base::get_options()->get_option('jigoshop_dibspayment_enabled');
+			$this->title = Jigoshop_Base::get_options()->get_option('jigoshop_dibspayment_title');
+			$this->merchant = Jigoshop_Base::get_options()->get_option('jigoshop_dibspayment_merchant');
+			$this->description  = Jigoshop_Base::get_options()->get_option('jigoshop_dibspayment_description');
+			$this->testmode = Jigoshop_Base::get_options()->get_option('jigoshop_dibspayment_testmode');
+			$this->MAC_key = Jigoshop_Base::get_options()->get_option('jigoshop_dibspayment_key');
+			$this->instant = Jigoshop_Base::get_options()->get_option('jigoshop_dibspayment_instant');
+			$this->language = Jigoshop_Base::get_options()->get_option('jigoshop_dibspayment_language');
 
 			add_action('init', array(&$this, 'check_callback') );
-			add_action('valid-dibs-callback', array(&$this, 'successful_request') );
-			add_action('receipt_dibs', array(&$this, 'receipt_page'));
+			add_action('valid-dibspayment-callback', array(&$this, 'successful_request') );
+			add_action('receipt_dibspayment', array(&$this, 'receipt_page'));
 			add_filter('jigoshop_thankyou_message', array(&$this, 'thankyou_message') );
 
 		}
@@ -89,7 +89,7 @@ function jigoshop_dibs()
 				'name'		=> __('Enable DIBS Payment Window','jigoshop'),
 				'desc' 		=> '',
 				'tip' 		=> '',
-				'id' 		=> 'jigoshop_dibs_enabled',
+				'id' 		=> 'jigoshop_dibspayment_enabled',
 				'std' 		=> 'no',
 				'type' 		=> 'checkbox',
 				'choices'	=> array(
@@ -102,7 +102,7 @@ function jigoshop_dibs()
 				'name'		=> __('Method Title','jigoshop'),
 				'desc' 		=> '',
 				'tip' 		=> __('This controls the title which the user sees during checkout.','jigoshop'),
-				'id' 		=> 'jigoshop_dibs_title',
+				'id' 		=> 'jigoshop_dibspayment_title',
 				'std' 		=> __('DIBS','jigoshop'),
 				'type' 		=> 'text'
 			);
@@ -111,7 +111,7 @@ function jigoshop_dibs()
 				'name'		=> __('Description','jigoshop'),
 				'desc' 		=> '',
 				'tip' 		=> __('This controls the description which the user sees during checkout.','jigoshop'),
-				'id' 		=> 'jigoshop_dibs_description',
+				'id' 		=> 'jigoshop_dibspayment_description',
 				'std' 		=> __("Pay via DIBS using credit card or bank transfer.", 'jigoshop'),
 				'type' 		=> 'longtext'
 			);
@@ -120,7 +120,7 @@ function jigoshop_dibs()
 				'name'		=> __('DIBS Merchant ID','jigoshop'),
 				'desc' 		=> '',
 				'tip' 		=> __('Please enter your DIBS merchant id; this is needed in order to take payment!','jigoshop'),
-				'id' 		=> 'jigoshop_dibs_merchant',
+				'id' 		=> 'jigoshop_dibspayment_merchant',
 				'std' 		=> '',
 				'type' 		=> 'text'
 			);
@@ -129,7 +129,7 @@ function jigoshop_dibs()
 				'name'		=> __('DIBS MAC Key','jigoshop'),
 				'desc' 		=> '',
 				'tip' 		=> __('Please enter your DIBS MAC key; this will further secure your payments.','jigoshop'),
-				'id' 		=> 'jigoshop_dibs_key',
+				'id' 		=> 'jigoshop_dibspayment_key',
 				'std' 		=> '',
 				'type' 		=> 'longtext'
 			);
@@ -138,7 +138,7 @@ function jigoshop_dibs()
 				'name'		=> __('Enable test mode','jigoshop'),
 				'desc' 		=> '',
 				'tip' 		=> __('When test mode is enabled only DIBS specific test-cards are accepted.','jigoshop'),
-				'id' 		=> 'jigoshop_dibs_testmode',
+				'id' 		=> 'jigoshop_dibspayment_testmode',
 				'std' 		=> 'no',
 				'type' 		=> 'checkbox',
 				'choices'	=> array(
@@ -151,7 +151,7 @@ function jigoshop_dibs()
 				'name'		=> __('Language','jigoshop'),
 				'desc' 		=> '',
 				'tip' 		=> __('Show Dibs Payment Window in this language. If set to WPML detect, it switches between the languages listed here, but if not found defaults to English.','jigoshop'),
-				'id' 		=> 'jigoshop_dibs_language',
+				'id' 		=> 'jigoshop_dibspayment_language',
 				'std' 		=> 'en',
 				'type' 		=> 'select',
 				'choices'	=> array(
@@ -172,7 +172,7 @@ function jigoshop_dibs()
 		* There are no payment fields for dibs, but we want to show the description if set.
 		**/
 		function payment_fields() {
-			if ($jigoshop_dibs_description = Jigoshop_Base::get_options()->get_option('jigoshop_dibs_description')) echo wpautop(wptexturize($jigoshop_dibs_description));
+			if ($jigoshop_dibspayment_description = Jigoshop_Base::get_options()->get_option('jigoshop_dibspayment_description')) echo wpautop(wptexturize($jigoshop_dibspayment_description));
 		}
 
 		/**
@@ -308,7 +308,7 @@ function jigoshop_dibs()
 
 			if ( strpos($_SERVER["REQUEST_URI"], 'jigoshop/dibscallback') !== false ) {
 				header("HTTP/1.1 200 Ok");
-				do_action("valid-dibs-callback", stripslashes_deep($_POST));
+				do_action("valid-dibspayment-callback", stripslashes_deep($_POST));
 				
 			}
 		}
