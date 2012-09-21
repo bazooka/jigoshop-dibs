@@ -81,7 +81,7 @@ function jigoshop_dibspayment()
 			// Define the Section name for the Jigoshop_Options
 			$defaults[] = array( 
 				'name' => __('DIBS Payment Window', 'jigoshop'), 'type' => 'title', 
-				'desc' => __('DIBS Payment Window works by sending the user to <a href="http://www.dibspayment.com/">DIBS</a> to enter their payment information.', 'jigoshop')
+				'desc' => __('This is the new DIBS Payment Window for 2012. It works by sending the user to <a href="http://www.dibspayment.com/">DIBS</a> to enter their payment information.', 'jigoshop')
 				);
 			
 			// List each option in order of appearance with details
